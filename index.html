@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
+    <meta charset="utf-8">
     <title>VinylCache</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="js/lib/angular.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/controllers/MainController.js"></script>
-    <script src="js/controllers/SubmitCtrl.js"></script>
-    <script src="js/factories/RecordsFactory.js"></script>
-    <script src="js/directives/loader/loader.js"></script>
-    <script src="js/directives/record/record.js"></script>
   </head>
-
-  <body ng-app="Records" ng-controller="MainController">
+  <body>
 
     <nav class="nav navbar-default navbar-fixed-top">
       <div class="container-fluid">
@@ -33,17 +26,74 @@
           <button class="btn btn-info add" type="submit">Add Some Vinyl</button>
         </form> 
       </div> 
-
-      <div class="col-md-8">
-        <loader ng-show="!showRecords"></loader>
-        <div ng-show="showRecords">
-          <record vinyl="record" ng-repeat="record in records | orderBy:'artist'" class="record"></record>
-        </div>
-      </div>
-
+ 
+      <div class="col-md-8"></div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/template" id="record-list-template">
+      <% _.each(records, function(record) { %>
+      <div>
+        <img class="album" width="300" height="300" src="<%= record.get('imgUrl') %>"/>
+        <div class="info">
+          <h1><%= record.get('artist') %></h1>
+          <h3><%= record.get('title') %></h3>
+          <button class="btn btn-default edit" ng-click="toggleEdit()">Edit</button>
+          <div id="editForm">
+            <form name="submitForm" ng-show="isEditing">
+              <input required ng-model="record.artist"/><br />
+              <input required ng-model="record.title"/><br />
+              <input required ng-model="record.imgUrl"/><br />
+              <button class="btn btn-info add" ng-click="updateRecord(record)">Submit edits</button>
+              <button class="btn btn-danger del" ng-click="remove(record)">Remove</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+    <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
+
+    <script>
+
+      // $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+      //   options.url = 'http://vinylcache.herokuapp.com' + options.url
+      // });
+
+      var Records = Backbone.Collection.extend({
+        url:  '/records'
+      });
+
+      var RecordList = Backbone.View.extend({
+        el: '.col-md-8',
+        render: function() {
+          var that = this;
+          var records = new Records();
+          records.fetch({
+            success: function(records) {
+              var template = _.template($('#record-list-template').html(), {records: records.models});
+              that.$el.html(template);
+            }
+          })
+        }
+      });
+
+      var Router = Backbone.Router.extend({
+        routes: {
+          '': 'home'
+        }
+      });
+
+      var recordList = new RecordList();
+
+      var router = new Router();
+      router.on('route:home', function() {
+        recordList.render();
+      });
+
+      Backbone.history.start();
+    </script>
   </body>
 </html>

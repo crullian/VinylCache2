@@ -28,9 +28,9 @@ app.get('/records', function(req, res) {
     modelParams.artist = req.query.artist;
   }
   RecordModel.find(modelParams, function(err, records) {
-    setTimeout(function() {
-      res.send(records);
-    }, Math.random() * 1000);
+    // setTimeout(function() {
+    res.send(records);
+    // }, Math.random() * 1000);
   });
 });
 

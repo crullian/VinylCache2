@@ -1,1 +1,0 @@
-var RecordModel = Backbone.Model.extend({});

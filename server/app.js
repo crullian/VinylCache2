@@ -22,19 +22,33 @@ app.get('/', function(req, res) {
   res.sendFile(indexHtmlPath);
 });
 
-app.get('/records', function(req, res) {
+app.get('/api/records', function(req, res) {
   var modelParams = {};
   if (req.query.artist) {
     modelParams.artist = req.query.artist;
   }
   RecordModel.find(modelParams, function(err, records) {
-    // setTimeout(function() {
-    res.send(records);
-    // }, Math.random() * 1000);
+    if (!err) {
+      // setTimeout(function() {
+      res.send(records);
+      // }, Math.random() * 1000);
+    } else {
+      console.log(err);
+    }
   });
 });
 
-app.post('/records', function(req, res) {
+app.get('/api/records/:id', function(req, res) {
+  RecordModel.findById(req.params.id, function(err, record) {
+    if (!err) {
+      res.send(record);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.post('/api/records', function(req, res) {
   // Reference schema for what is expected as the POST body.
   var recordData = req.body;
   RecordModel.create(recordData, function(err, record) {
@@ -47,7 +61,7 @@ app.post('/records', function(req, res) {
   });
 });
 
-app.put('/records/:id', function(req, res) {
+app.put('/api/records/:id', function(req, res) {
   RecordModel.findById(req.params.id, function(err, record) {
     console.log("REQ.PARAMS: ", req.params);
     console.log("REQ.BODY: ", req.body);
@@ -64,7 +78,7 @@ app.put('/records/:id', function(req, res) {
   })
 })
 
-app.delete('/records/:id', function(req, res) {
+app.delete('/api/records/:id', function(req, res) {
   RecordModel.findById(req.params.id, function(err, record) {
     record.remove(function(err) {
       if (!err) {

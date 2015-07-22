@@ -31,18 +31,18 @@
     </div>
 
     <script id="record-list-template" type="text/template">
-      <div>
+      <div class="record">
         <img class="album" width="300" height="300" src="<%= imgUrl %>"/>
         <div class="info">
           <h1><%= artist %></h1>
           <h3><%= title %></h3>
-          <button class="btn btn-default edit" ng-click="toggleEdit()">Edit</button>
+          <button class="btn btn-default edit">Edit</button>
           <div id="editForm">
-            <form name="submitForm" ng-show="isEditing">
+            <form name="submitForm" >
               <input required ng-model="record.artist"/><br />
               <input required ng-model="record.title"/><br />
               <input required ng-model="record.imgUrl"/><br />
-              <button class="btn btn-info add" ng-click="updateRecord(record)">Submit edits</button>
+              <button class="btn btn-info update">Submit edits</button>
               <button class="btn btn-danger delete">Remove</button>
             </form>
           </div>

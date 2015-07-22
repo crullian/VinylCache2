@@ -6,21 +6,26 @@ app.RecordView = Backbone.View.extend({
   template: _.template($('#record-list-template').html()),
 
   events: {
-    'click .delete': 'deleteBook'
+    'click .delete': 'deleteRecord',
+    'click .update': 'updateRecord',
+    'click .edit': 'showEdit'
   },
 
-  deleteBook: function() {
+  deleteRecord: function() {
     this.model.destroy();
     this.remove();
   },
 
-  // edit: function() {
+  updateRecord: function() {
+    // this.model.create();
+  },
 
-  // },
+  showEdit: function() {
+    this.$('#editForm').slideToggle();
+  },
 
   render: function() {
-    console.log("RENDERER")
-      //this.el is what we defined in tagName. use $el to get access to jQuery html() function
+    //this.el is what we defined in tagName. use $el to get access to jQuery html() function
     this.$el.html(this.template(this.model.attributes));
 
     return this;

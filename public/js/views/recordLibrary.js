@@ -17,7 +17,6 @@ app.RecordLibraryView = Backbone.View.extend({
   // render record library by rendering each record in its collection
   render: function() {
     this.collection.each(function(item) {
-      console.log('RENDER LIBRARY');
       this.renderRecord(item);
     }, this);
   },

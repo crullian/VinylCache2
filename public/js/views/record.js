@@ -16,13 +16,28 @@ app.RecordView = Backbone.View.extend({
     this.remove();
   },
 
-  updateRecord: function() {
-    // this.model.create();
-    this.$('#editForm').slideToggle(400);
+  updateRecord: function(e) {
+    e.preventDefault();
+
+    var formData = {};
+    $('#editForm').children('input').each(function(i, el) {
+
+      formData[el.id] = $(el).val();
+
+      $('#editForm').slideToggle();
+    });
+    this.model.save(formData); // put request
   },
 
   showEdit: function() {
-    this.$('#editForm').slideToggle(100);
+    this.$('#editForm').slideToggle(150);
+    $(".edit").text(function(i, text) {
+      return text === "Edit" ? "Close" : "Edit";
+    })
+  },
+
+  initialize: function() {
+    this.model.on('change', this.render, this); // watch for a change and update the view
   },
 
   render: function() {

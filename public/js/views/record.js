@@ -2,7 +2,6 @@ var app = app || {};
 
 app.RecordView = Backbone.View.extend({
   tagName: 'div', // defaults to div, just being explicit
-  // className: 'record',
   template: _.template($('#record-list-template').html()),
 
   events: {

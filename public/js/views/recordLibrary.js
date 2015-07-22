@@ -40,26 +40,12 @@ app.RecordLibraryView = Backbone.View.extend({
     }, this);
   },
 
-  // render: function() {
-  //   var that = this;
-  //   var recordLibrary = new app.RecordLibrary();
-  //   recordLibrary.fetch({
-  //     success: function(records) {
-  //       var template = _.template($('#record-list-template').html(), {
-  //         records: records.models
-  //       });
-  //       that.$el.html(template);
-  //     }
-  //   })
-  // }
-
   // render a record by creating a RecordView and appending the
-  // element it renders to the library's element
+  // element it renders to the record library's element
   renderRecord: function(item) {
     var recordView = new app.RecordView({
       model: item
     });
-    // this.$el.append($(".col-md-8"));
     $(".col-md-8").append(recordView.render().el);
   },
 });

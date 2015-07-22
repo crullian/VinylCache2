@@ -1,19 +1,21 @@
 var app = app || {};
-// $(function() {
-//   new app.RecordList();
+
+$(function() {
+  new app.RecordLibraryView();
+});
+
+// var Router = Backbone.Router.extend({
+//   routes: {
+//     '': 'home'
+//   }
 // });
 
-var Router = Backbone.Router.extend({
-  routes: {
-    '': 'home'
-  }
-});
+// var recordView = new app.RecordView();
 
-var recordList = new app.RecordList();
+// var router = new Router();
+// router.on('route:home', function() {
+//   recordView.render();
+//   console.log("HERE");
+// });
 
-var router = new Router();
-router.on('route:home', function() {
-  recordList.render();
-});
-
-Backbone.history.start();
+// Backbone.history.start();

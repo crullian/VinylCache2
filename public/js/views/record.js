@@ -18,11 +18,11 @@ app.RecordView = Backbone.View.extend({
 
   updateRecord: function() {
     // this.model.create();
-    this.$('#editForm').slideToggle();
+    this.$('#editForm').slideToggle(400);
   },
 
   showEdit: function() {
-    this.$('#editForm').slideToggle();
+    this.$('#editForm').slideToggle(100);
   },
 
   render: function() {

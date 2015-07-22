@@ -1,16 +1,35 @@
 var app = app || {};
 
 app.RecordLibraryView = Backbone.View.extend({
-  el: '.col-md-8',
+  el: '.row',
+
+  events: {
+    'click .add': 'addRecord'
+  },
+
+  addRecord: function(e) {
+    e.preventDefault();
+
+    var formData = {};
+    $('#addForm').children('input').each(function(i, el) {
+      if ($(el).val() != '') {
+        formData[el.id] = $(el).val();
+      }
+      $(el).val('');
+    });
+    console.log(formData);
+    this.collection.create(formData);
+  },
 
   initialize: function() {
     this.collection = new app.RecordLibrary();
     this.collection.fetch({
       reset: true
-    })
+    });
+    this.$el.append($("<div class='col-md-8'></div>"));
     this.render();
 
-    // this.listenTo(this.collection, 'add', this.renderRecord);
+    this.listenTo(this.collection, 'add', this.renderRecord);
     this.listenTo(this.collection, 'reset', this.render);
   },
 
@@ -40,6 +59,7 @@ app.RecordLibraryView = Backbone.View.extend({
     var recordView = new app.RecordView({
       model: item
     });
-    this.$el.append(recordView.render().el);
+    // this.$el.append($(".col-md-8"));
+    $(".col-md-8").append(recordView.render().el);
   },
 });

@@ -21,6 +21,14 @@ h3 {
   margin-top: 0px;
 }
 
+.col-md-4 {
+  position: fixed;
+}
+
+.col-md-8 {
+  float: right;
+}
+
 .row {
   padding-top: 50px;
 }
@@ -91,6 +99,14 @@ input {
 
   h3 {
     font-size: 16px;
+  }
+
+  .col-md-4 {
+    position: initial;
+  }
+
+  .col-md-8 {
+    float: left;
   }
 
   .record {

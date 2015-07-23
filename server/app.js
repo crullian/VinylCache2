@@ -70,7 +70,7 @@ app.put('/api/records/:id', function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log('Hoooray, Updated!')
+          console.log('Updated');
           res.status(200).end();
         }
       })

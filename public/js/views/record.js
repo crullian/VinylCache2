@@ -19,18 +19,18 @@ app.RecordView = Backbone.View.extend({
     e.preventDefault();
 
     var formData = {};
-    $('#editForm').children('input').each(function(i, el) {
+    this.$('#editForm').children('input').each(function(i, el) {
 
       formData[el.id] = $(el).val();
 
-      $('#editForm').slideToggle();
     });
+    this.$('#editForm').slideToggle();
     this.model.save(formData); // put request
   },
 
   showEdit: function() {
     this.$('#editForm').slideToggle(150);
-    $(".edit").text(function(i, text) {
+    this.$(".edit").text(function(i, text) {
       return text === "Edit" ? "Close" : "Edit";
     })
   },
